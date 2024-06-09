@@ -51,7 +51,7 @@
             function ask(question, completed) {
                 message('human', question);
                 $('prompt').blur();
-                const url = '/chat?' + encodeURIComponent(question);
+                const url = '/chat?q=' + encodeURIComponent(question);
                 fetch(url).then(response => {
                     if (response.status !== 200) {
                         throw new Error('Unable to get an answer!')
