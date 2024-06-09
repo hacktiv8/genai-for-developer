@@ -13,9 +13,9 @@ test("GET /", async function () {
 	expect(await res.text()).toMatch(/Pico Jarvis/);
 });
 
-test("GET /chat?What is the biggest planet in the solar system?", async function () {
+test("GET /chat?q=What is the biggest planet in the solar system?", async function () {
 	const res = await app.request(
-		"/chat?What is the biggest planet in the solar system?",
+		"/chat?q=What is the biggest planet in the solar system?",
 	);
 	expect(res.status).toBe(200);
 	expect(await res.text()).toMatch("Jupiter");
