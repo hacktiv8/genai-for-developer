@@ -15,7 +15,13 @@ function createResponse(data) {
 }
 
 test("Calling llm() function with argument 'Hello, world!' should return some answer", async function () {
-  const llmResponse = { "model": "orca-mini", "response": " Yes, I can speak Bahasa Indonesia. Is there anything specific you would like to know or do in Indonesian?", "done": true, "done_reason": "stop" };
+  const llmResponse = {
+			model: "orca-mini",
+			response:
+				" Yes, I can speak Bahasa Indonesia. Is there anything specific you would like to know or do in Indonesian?",
+			done: true,
+			done_reason: "stop",
+		};
 
   fetch.mockResolvedValue(createResponse(llmResponse));
 

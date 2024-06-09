@@ -10,7 +10,15 @@ test("GET /health", async function () {
 test("GET /", async function () {
 	const res = await app.request("/");
 	expect(res.status).toBe(200);
-	expect((await res.text()).length).toBeGreaterThan(0);
+	expect(await res.text()).toMatch(/Pico Jarvis/);
+});
+
+test("GET /chat?What is the biggest planet in the solar system?", async function () {
+	const res = await app.request(
+		"/chat?What is the biggest planet in the solar system?",
+	);
+	expect(res.status).toBe(200);
+	expect(await res.text()).toMatch("Jupiter");
 });
 
 test("GET /unknown", async function () {

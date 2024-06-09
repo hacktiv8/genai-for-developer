@@ -1,5 +1,7 @@
-import { generate } from "./llm.js";
 import { Hono } from "hono";
+
+import { generate } from "./llm.js";
+import fs from "node:fs";
 
 const app = new Hono();
 
@@ -7,8 +9,7 @@ app.get("/health", function (ctx) {
 	return ctx.text("OK");
 });
 app.get("/", async function (ctx) {
-	const response = await generate("What is the biggest city in Indonesia?");
-	return ctx.text(response);
+	return ctx.html(fs.readFileSync("index.html"));
 });
 
 export default app;
