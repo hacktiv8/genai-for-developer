@@ -1,5 +1,11 @@
 const LLM_API_URL = "http://localhost:11434/api/generate";
 
+export function createPrompt(question) {
+	return `This is a conversation between User and Assistant, a friendly chatbot. Assistant is helpful, kind, honest, and never fails to answer any requests immediately, with precision, and concisely in 10 words or less.
+   User: ${question}
+   Assistant:`;
+}
+
 export async function generate(prompt) {
   if (!prompt) throw new Error("Prompt is required");
 
