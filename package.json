@@ -1,16 +1,22 @@
 {
-  "name": "genai-for-developer",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "test": "vitest"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "description": "",
-  "type": "module",
-  "devDependencies": {
-    "vitest": "1.6.0"
-  }
+	"name": "genai-for-developer",
+	"version": "1.0.0",
+	"main": "server.js",
+	"scripts": {
+		"test": "vitest",
+		"start": "node --watch server.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"description": "",
+	"type": "module",
+	"dependencies": {
+		"@hono/node-server": "1.11.2",
+		"hono": "4.4.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.0",
+		"vitest": "1.6.0"
+	}
 }
