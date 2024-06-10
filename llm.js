@@ -22,7 +22,7 @@ Answer: Leonardo da Vinci painted Mona Lisa.
 
 Let's go!`;
 
-async function answer(text) {
+export async function answer(text) {
 	const MARKER = "Answer:";
 	const pos = text.lastIndexOf(MARKER);
 	if (pos < 0) return "?";
