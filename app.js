@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-import { think, generate } from "./llm.js";
+import { think } from "./groq.js";
 import fs from "node:fs";
 
 const app = new Hono();
