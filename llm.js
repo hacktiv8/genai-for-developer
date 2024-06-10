@@ -45,7 +45,7 @@ export async function generate(prompt) {
     "Content-Type": "application/json"
   };
   const body = JSON.stringify({
-			model: "orca-mini",
+			model: "mistral-openorca",
 			prompt,
 			options: {
 				num_predict: 200,
