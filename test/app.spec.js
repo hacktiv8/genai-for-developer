@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import app from "./app.js";
+import app from "../app.js";
 
 test("GET /health", async function () {
 	const res = await app.request("/health");
@@ -13,13 +13,17 @@ test("GET /", async function () {
 	expect(await res.text()).toMatch(/Pico Jarvis/);
 });
 
-test("GET /chat?q=What is the biggest planet in the solar system?", async function () {
-	const res = await app.request(
-		"/chat?q=What is the biggest planet in the solar system?",
-	);
-	expect(res.status).toBe(200);
-	expect(await res.text()).toMatch("Jupiter");
-});
+test(
+	"GET /chat?q=What is the biggest planet in the solar system?",
+	async function () {
+		const res = await app.request(
+			"/chat?q=What is the biggest planet in the solar system?",
+		);
+		expect(res.status).toBe(200);
+		expect(await res.text()).toMatch("Jupiter");
+	},
+	{ testTimeout: 10000 },
+);
 
 test("GET /unknown", async function () {
 	const res = await app.request("/unknown");

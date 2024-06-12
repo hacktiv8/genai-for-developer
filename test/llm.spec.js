@@ -1,6 +1,6 @@
 import { expect, test, vi } from "vitest";
 
-import { answer, generate } from "./llm.js";
+import { answer, generate } from "../llm.js";
 
 global.fetch = vi.fn();
 
