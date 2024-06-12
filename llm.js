@@ -4,7 +4,11 @@ const SYSTEM_MESSAGE = `You run in a process of Question, Thought, Action, Obser
 
 Use Thought to describe your thoughts about the question you have been asked.
 Observation will be the result of running those actions.
-Finally at the end, state the Answer.
+
+If you can not answer the question from your memory, use Action to run one of these actions available to you:
+
+- weather: location
+- lookup: terms
 
 Here are some sample sessions.
 
@@ -17,8 +21,14 @@ Answer: The capital of France is Paris.
 Question: Who painted Mona Lisa?
 Thought: This is about general knowledge, I can recall the answer from my memory.
 Action: lookup: painter of Mona Lisa.
-Observation: Mona Lisa was painted by Leonardo da Vinci .
+Observation: Mona Lisa was painted by Leonardo da Vinci.
 Answer: Leonardo da Vinci painted Mona Lisa.
+
+Question: How the weather in Jakarta?
+Thought: This is about weather in location, I need to check the current weather.
+Action: weather: Jakarta.
+Observation: Sunny
+Answer: It's Sunny in Jakarta.
 
 Let's go!`;
 
@@ -35,6 +45,13 @@ export async function think(inquiry) {
 	const response = await generate(prompt);
 	console.log("Response:", response);
 	return answer(response);
+}
+
+export function finalPrompt(inquiry, observation) {
+	return `${inquiry}
+Observation: ${observation}
+Thought: Now I have the answer.
+Answer:`;
 }
 
 export async function generate(prompt) {

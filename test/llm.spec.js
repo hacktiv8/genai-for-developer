@@ -1,6 +1,6 @@
 import { expect, test, vi } from "vitest";
 
-import { answer, generate } from "../llm.js";
+import { answer, generate, finalPrompt } from "../llm.js";
 
 global.fetch = vi.fn();
 
@@ -14,7 +14,7 @@ function createResponse(data) {
 	};
 }
 
-test("Calling llm() function with argument 'Hello, world!' should return some answer", async function () {
+test("Calling generate() function with argument 'Hello, world!' should return some answer", async function () {
 	const llmResponse = {
 		model: "orca-mini",
 		response:
@@ -43,7 +43,7 @@ test("Calling llm() function with argument 'Hello, world!' should return some an
 	expect(response.length).toBeGreaterThan(0);
 });
 
-test("Calling llm() function without argument should throw an error", async function () {
+test("Calling generate() function without argument should throw an error", async function () {
 	await expect(async () => await generate()).rejects.toThrowError(
 		"Prompt is required",
 	);
@@ -60,3 +60,18 @@ test("answer() function returns '?' if 'Answer:' is not found", async function (
 	const result = await answer(text);
 	expect(result).toBe("?");
 });
+
+test("finalPrompt() function return observation, thought and answer", function () {
+	const prompt = finalPrompt(
+		"Question: How the weather in Jakarta?",
+		"It's sunny in Jakarta.",
+	);
+	expect(prompt).toBe(`Question: How the weather in Jakarta?
+Observation: It's sunny in Jakarta.
+Thought: Now I have the answer.
+Answer:`);
+});
+
+test.todo("reason() function");
+test.todo("Function act() return null when there is no action");
+test.todo("Function act() return action when there is action detected");
