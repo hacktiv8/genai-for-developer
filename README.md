@@ -4,7 +4,7 @@
 
 This is a material for GenAI for Developer Course. This course is designed to help developers to learn about AI and how to build AI applications. This course is designed for developers who have no experience in AI.
 
-## Getting Started
+## External Function
 
 ### Prerequisites
 
@@ -12,18 +12,8 @@ This is a material for GenAI for Developer Course. This course is designed to he
 $ ollama serve
 ```
 
-### Starting the service
+### Running the weather app
 
 ```shell
-npm start
+node weather jakarta
 ```
-
-```shell
-open localhost:3000
-```
-
-## Prompt Example
-
-* What is the definition of inflation?
-* What is the biggest planet in our solar system?
-* What is the capital city of Indonesia?

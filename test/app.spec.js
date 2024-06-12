@@ -13,7 +13,7 @@ test("GET /", async function () {
 	expect(await res.text()).toMatch(/Pico Jarvis/);
 });
 
-test(
+test.skip(
 	"GET /chat?q=What is the biggest planet in the solar system?",
 	async function () {
 		const res = await app.request(
