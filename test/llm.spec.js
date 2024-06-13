@@ -1,6 +1,7 @@
+import.meta.env.WEATHER_API_KEY;
 import { expect, test, vi } from "vitest";
 
-import { answer, generate, finalPrompt } from "../llm.js";
+import { act, answer, generate, finalPrompt } from "../llm.js";
 
 global.fetch = vi.fn();
 
@@ -72,6 +73,23 @@ Thought: Now I have the answer.
 Answer:`);
 });
 
-test.todo("reason() function");
-test.todo("Function act() return null when there is no action");
-test.todo("Function act() return action when there is action detected");
+test("Function act() return null when there is no action", async function () {
+	const action = await act("This is a test");
+	expect(action).toBeNull();
+});
+
+test("Function act() return null when the action is 'lookup'", async function () {
+	const action = await act("Action: lookup");
+	expect(action).toBeNull();
+});
+
+test.skip("Function act() return action when there is action is 'weather'", async function () {
+	const action = await act("Action: weather: Jakarta");
+	expect(action).toBe({
+		action: "weather",
+		name: "weather",
+		args: ["Jakarta"],
+		result: "Sunny",
+	});
+});
+test.todo("reason() function return conclusion");

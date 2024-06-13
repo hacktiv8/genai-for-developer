@@ -26,7 +26,7 @@ test("Calling get_current_weather() function should return weather data", async 
 			headers: "application/json",
 		},
 	);
-	expect(result.currentConditions.conditions).toEqual("Partially cloudy");
+	expect(result).toEqual("Partially cloudy");
 });
 
 test("Calling get_current_weather() with specific city should return weather data", async function () {
@@ -41,7 +41,7 @@ test("Calling get_current_weather() with specific city should return weather dat
 			headers: "application/json",
 		},
 	);
-	expect(result.currentConditions.conditions).toEqual("Partially cloudy");
+	expect(result).toEqual("Partially cloudy");
 });
 
 test.todo(
