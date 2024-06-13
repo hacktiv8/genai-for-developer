@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-import { think } from "./llm.js";
+import { reason } from "./llm.js";
 import fs from "node:fs";
 
 const app = new Hono();
@@ -11,7 +11,7 @@ app.get("/health", function (ctx) {
 app.get("/chat", async function (ctx) {
 	const inquiry = ctx.req.query("q");
 	console.log("Waiting for LLM...");
-	const response = await think(`Question: ${inquiry}`);
+	const response = await reason(`Question: ${inquiry}`);
 	console.log("LLM answers:", response);
 	return ctx.text(response);
 });

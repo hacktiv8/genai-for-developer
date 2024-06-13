@@ -1,4 +1,4 @@
-import { get_current_weather } from "./weather.js";
+import { exchange } from "./exchange.js";
 
 const LLM_API_URL = "http://localhost:11434/api/generate";
 
@@ -9,7 +9,7 @@ Observation will be the result of running those actions.
 
 If you can not answer the question from your memory, use Action to run one of these actions available to you:
 
-- weather: location
+- exchange: from to
 - lookup: terms
 
 Here are some sample sessions.
@@ -26,11 +26,11 @@ Action: lookup: painter of Mona Lisa.
 Observation: Mona Lisa was painted by Leonardo da Vinci.
 Answer: Leonardo da Vinci painted Mona Lisa.
 
-Question: How the weather in Jakarta?
-Thought: This is about weather in location, I need to check the current weather.
-Action: weather: Jakarta.
-Observation: Sunny
-Answer: It's Sunny in Jakarta.
+Question: What is the exchange rate from USD to EUR?
+Thought: This is about currency exchange rates, I need to check the current rate.
+Action: exchange: USD EUR
+Observation: 0.8276 EUR for 1 USD.
+Answer: The current exchange rate is 0.8276 EUR for 1 USD.
 
 Let's go!`;
 
@@ -70,9 +70,9 @@ export async function act(text) {
 		.split(" ");
 
 	if (fnName === "lookup") return null;
-	if (fnName === "weather") {
-		const result = await get_current_weather(fnArgs[0]);
-		console.log("ACT: weather", { args: fnArgs, result });
+	if (fnName === "exchange") {
+		const result = await exchange(fnArgs[0], fnArgs[1]);
+		console.log("ACT: exchange", { args: fnArgs, result });
 		return { action, name: fnName, args: fnArgs, result };
 	}
 	console.log("Not recognized action:", { action, name: fnName, args: fnArgs });
