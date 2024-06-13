@@ -8,8 +8,11 @@ Use Thought to describe your thoughts about the question you have been asked.
 Observation will be the result of running those actions.
 
 If you can not answer the question from your memory, use Action to run one of these actions available to you:
-- lookup: terms
-- exchange: from to
+
+- If the question is about currency, use exchange: from to
+- Otherwise, use lookup: terms
+
+Finally at the end, state the Answer.
 
 Here are some sample sessions.
 
@@ -30,8 +33,7 @@ Thought: This is about currency exchange rates, I need to check the current rate
 Action: exchange: USD EUR
 Observation: 0.8276 EUR for 1 USD.
 Answer: The current exchange rate is 0.8276 EUR for 1 USD.
-
-Let's go!`;
+`;
 
 export async function answer(text) {
 	const MARKER = "Answer:";
@@ -84,8 +86,9 @@ Thought: Now I have the answer.
 Answer:`;
 }
 
-export async function reason(inquiry) {
-	const prompt = `${SYSTEM_MESSAGE}\n\n${inquiry}`;
+export async function reason(history, inquiry) {
+	const prompt = `${SYSTEM_MESSAGE}\n\n${context(history)}\n\n${inquiry}`;
+	console.log(prompt);
 	const response = await generate(prompt);
 	console.log(`----------\n${response}\n----------`);
 
@@ -98,6 +101,17 @@ export async function reason(inquiry) {
 	console.log("REASON result:", action.result);
 	conclusion = await generate(finalPrompt(inquiry, action.result));
 	return conclusion;
+}
+
+const HISTORY_MSG =
+	"Before formulating a thought, consider the following conversation history.";
+
+export function context(history) {
+	if (history.length > 0) {
+		const recents = history.slice(-3 * 2); // only last 3 Q&A
+		return `${HISTORY_MSG}\n\n${recents.join("\n")}`;
+	}
+	return "";
 }
 
 export async function generate(prompt) {

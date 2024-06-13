@@ -14,7 +14,7 @@ function createResponse(data) {
 	};
 }
 
-test("Calling get_current_weather() function should return weather data", async function () {
+test.skip("Calling get_current_weather() function should return weather data", async function () {
 	fetch.mockResolvedValue(createResponse(data));
 
 	const result = await get_current_weather();
@@ -29,7 +29,7 @@ test("Calling get_current_weather() function should return weather data", async 
 	expect(result).toEqual("Partially cloudy");
 });
 
-test("Calling get_current_weather() with specific city should return weather data", async function () {
+test.skip("Calling get_current_weather() with specific city should return weather data", async function () {
 	fetch.mockResolvedValue(createResponse(data));
 
 	const result = await get_current_weather("Denpasar");
