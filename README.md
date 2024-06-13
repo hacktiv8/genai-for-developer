@@ -4,16 +4,11 @@
 
 This is a material for GenAI for Developer Course. This course is designed to help developers to learn about AI and how to build AI applications. This course is designed for developers who have no experience in AI.
 
-## External Function
+## External Function Exchange Rate
 
-### Prerequisites
+## Example prompt
 
-```shell
-$ ollama serve
-```
-
-### Running the weather app
-
-```shell
-node weather jakarta
-```
+- What is the exchange rate between USD and EUR?
+- What is the exchange rate between USD and JPY?
+- What is the exchange rate between USD and IDR?
+- If I have 100 USD, how much is it in IDR?
