@@ -107,9 +107,8 @@ test("context function always return maximum 3 conversation history", function (
 		"Answer: I'm 12 year old.",
 	];
 	const result = context(history);
-	console.log(result);
 	expect(result).toBe(
-		`Before formulating a thought, consider the following conversation history:\n\nQuestion: What are you doing?\nAnswer: I'm working.\nQuestion: What is your name?\nAnswer: My name is LLM.\nQuestion: How old are you?\nAnswer: I'm 12 year old.`,
+		`Before formulating a thought, consider the following conversation history.\n\nQuestion: What are you doing?\nAnswer: I'm working.\nQuestion: What is your name?\nAnswer: My name is LLM.\nQuestion: How old are you?\nAnswer: I'm 12 year old.`,
 	);
 });
 
@@ -117,6 +116,6 @@ test("context function always return any number of conversation history if less 
 	const history = ["Question: How are you?", "Answer: I'm fine."];
 	const result = context(history);
 	expect(result).toBe(
-		`Before formulating a thought, consider the following conversation history:\n\nQuestion: How are you?\nAnswer: I'm fine.`,
+		`Before formulating a thought, consider the following conversation history.\n\nQuestion: How are you?\nAnswer: I'm fine.`,
 	);
 });
