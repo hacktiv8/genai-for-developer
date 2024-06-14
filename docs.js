@@ -61,7 +61,7 @@ export async function vectorize(text) {
 			.map(({ text }) => text)
 			.join(" ");
 		const output = await extractor([sentence], {
-			polling: "mean",
+			pooling: "mean",
 			normalize: true,
 		});
 		result.push({ index, offset, sentence, vector: output[0].data });

@@ -14,7 +14,7 @@ const EMBEDDING_MODEL = "Xenova/paraphrase-MiniLM-L3-v2";
 	});
 
 	const text = args[0];
-	const output = await extractor([text], { polling: "mean", normalize: true });
+	const output = await extractor([text], { pooling: "mean", normalize: true });
 	const embedding = output[0].data;
 	console.log({ text, embedding });
 })();
