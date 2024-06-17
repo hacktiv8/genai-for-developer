@@ -10,7 +10,7 @@ import {
 	vectorize,
 } from "../docs.js";
 
-test("Read pdf document and convert it to text", async function () {
+test("Read pdf document and convert it to object", async function () {
 	const input = await readPdfPages({ url: "./test/fixtures/document.pdf" });
 	const pages = pdfObjectToPages(input);
 	expect(pages).toBeTypeOf("object");

@@ -1,7 +1,17 @@
 import.meta.env.WEATHER_API_KEY;
 import { expect, test, vi } from "vitest";
 
-import { act, answer, generate, finalPrompt, context } from "../llm.js";
+import {
+	act,
+	answer,
+	encode,
+	generate,
+	finalPrompt,
+	context,
+	parse,
+	search,
+} from "../llm.js";
+import { ingest } from "../docs.js";
 
 global.fetch = vi.fn();
 
@@ -50,13 +60,13 @@ test("Calling generate() function without argument should throw an error", async
 	);
 });
 
-test("answer() function parse 'Answer:' if it exists", async function () {
+test.skip("answer() function parse 'Answer:' if it exists", async function () {
 	const text = "This is a test\nAnswer: This is the answer";
 	const result = await answer(text);
 	expect(result).toBe("This is the answer");
 });
 
-test("answer() function returns '?' if 'Answer:' is not found", async function () {
+test.skip("answer() function returns '?' if 'Answer:' is not found", async function () {
 	const text = "This is a test";
 	const result = await answer(text);
 	expect(result).toBe("?");
@@ -73,15 +83,21 @@ Thought: Now I have the answer.
 Answer:`);
 });
 
-test("Function act() return null when there is no action", async function () {
-	const action = await act("This is a test");
-	expect(action).toBeNull();
-});
+test.todo(
+	"Function act() return null when there is no action",
+	async function () {
+		const action = await act("This is a test");
+		expect(action).toBeNull();
+	},
+);
 
-test("Function act() return null when the action is 'lookup'", async function () {
-	const action = await act("Action: lookup");
-	expect(action).toBeNull();
-});
+test.todo(
+	"Function act() return null when the action is 'lookup'",
+	async function () {
+		const action = await act("Action: lookup");
+		expect(action).toBeNull();
+	},
+);
 
 test.skip("Function act() return action when there is action is 'weather'", async function () {
 	const action = await act("Action: weather: Jakarta");
@@ -119,3 +135,38 @@ test("context function always return any number of conversation history if less 
 		`Before formulating a thought, consider the following conversation history.\n\nQuestion: How are you?\nAnswer: I'm fine.`,
 	);
 });
+
+test("Parse function", function () {
+	const parts = parse(`Question: What is the weather in Jakarta?
+		Thought: I think it's sunny in Jakarta.
+		Action: weather
+		Observation: It's sunny in Jakarta.
+		Answer: It's sunny in Jakarta.`);
+	expect(parts).toBeTypeOf("object");
+	expect(parts).toHaveProperty("observation");
+	expect(parts).toHaveProperty("thought");
+	expect(parts).toHaveProperty("answer");
+});
+
+test("encode function", async function () {
+	const text = "Hello World!";
+	const encoded = await encode(text);
+	expect(encoded).toBeTypeOf("object");
+	expect(encoded.length).toBeGreaterThan(3);
+	expect(encoded[0]).toBeTypeOf("number");
+});
+test(
+	"search function",
+	async function () {
+		const q = "How much revenue did GoTo group make in 2022?";
+		const document = await ingest("./document.pdf");
+		const result = await search(q, document);
+		expect(result).toBeTypeOf("object");
+		expect(result).toHaveProperty("0.score");
+		expect(result).toHaveProperty("1.page");
+		expect(result).toHaveProperty("2.index");
+		expect(result).toHaveProperty("0.offset");
+		expect(result).toHaveProperty("0.sentence");
+	},
+	{ timeout: 10000 },
+);

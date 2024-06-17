@@ -1,6 +1,6 @@
 import { readPdfPages } from "pdf-text-reader";
 
-const FEATURE_MODEL = "Xenova/paraphrase-MiniLM-L6-v2";
+const FEATURE_MODEL = "Xenova/paraphrase-MiniLM-L3-v2";
 
 export function pdfObjectToPages(pdfObject) {
 	const pages = pdfObject.map((page, number) => {
@@ -49,7 +49,7 @@ export async function vectorize(text) {
 	const transformers = await import("@xenova/transformers");
 	const { pipeline } = transformers;
 	const extractor = await pipeline("feature-extraction", FEATURE_MODEL, {
-		quantize: true,
+		quantized: true,
 	});
 
 	const chunks = split(text);
@@ -88,6 +88,7 @@ export async function ingest(url) {
 	const document = paginate(await vectorize(text), pagination);
 	const elapsed = Date.now() - start;
 	console.log(" vectorization time:", elapsed, "ms");
+	console.info(" Ingestion finish.");
 
 	return document;
 }

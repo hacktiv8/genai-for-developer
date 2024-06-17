@@ -8,7 +8,7 @@ This is a material for GenAI for Developer Course. This course is designed to he
 
 ## Example prompt
 
-- What is the capital of Indonesia?
-- What is the best food there?
-- What is the currency used in there?
-- How much is 1 USD worth in there?
+- Who is GoTo Group CEO?
+- How much revenue GoTo group made in 2022?
+- How much GTV year on year GoTo Group?
+- Summarize GoTo Group Financial Report Q3 2022
