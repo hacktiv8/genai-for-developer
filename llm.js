@@ -10,7 +10,7 @@ Think step by step. Always specify the full steps: Thought, Action, Observation,
 Use Thought to describe your thoughts about the question you have been asked.
 For Action, choose exactly one the following:
 
-- If the question is about currency, use exchange: from to
+- exchange: from to
 - lookup: terms
 
 Observation will be the result of running those actions.
