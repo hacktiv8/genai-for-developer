@@ -1,6 +1,6 @@
-import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { ChatOllama } from "@langchain/community/chat_models/ollama";
-import { ChatGroq } from "@langchain/groq";
+import { StringOutputParser } from "@langchain/core/output_parsers";
 
 const model = new ChatOllama({
 	model: "mistral-openorca",
@@ -8,25 +8,17 @@ const model = new ChatOllama({
 	top_k: 20,
 });
 
-const response = await model.invoke([
-	new SystemMessage("You're a helpful assistant"),
-	new HumanMessage("Tell me a programming joke"),
+const prompt = ChatPromptTemplate.fromMessages([
+	["system", "You are an expert at picking startup company names"],
+	[
+		"human",
+		"What are three good names for a company that distrupts the {industry} industry?",
+	],
 ]);
 
-console.log(response.content);
-console.log("-----------------");
+const outputParser = new StringOutputParser();
 
-const groqModel = new ChatGroq({
-	apiKey: process.env.API_KEY,
-	model: "llama3-8b-8192",
-	temperature: 0,
-	max_tokens: 1024,
-	top_p: 1,
-});
-
-const groqResponse = await groqModel.invoke([
-	new SystemMessage("You're a helpful assistant"),
-	new HumanMessage("Tell me a programming joke"),
-]);
-
-console.log(groqResponse.content);
+// prompt |> model |> parse |> invoke
+const chains = prompt.pipe(model).pipe(outputParser);
+const response = await chains.invoke({ industry: "transportation" });
+console.log(response);
