@@ -4,10 +4,10 @@
 
 This is a material for GenAI for Developer Course. This course is designed to help developers to learn about AI and how to build AI applications. This course is designed for developers who have no experience in AI.
 
-## LangChain Getting Started
+## LangChain Document Loaders
 
 ```bash
-$ npm install langchain @langchain/core @langchain/community @langchain/groq
+$ npm install pdf-parse
 ```
 
 ## Example prompt
