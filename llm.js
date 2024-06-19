@@ -74,13 +74,6 @@ export async function answer(kind, passages, question) {
 	return response.answer;
 }
 
-export async function think(inquiry) {
-	const prompt = `${SYSTEM_MESSAGE}\n\n${inquiry}`;
-	const response = await generate(prompt);
-	console.log("Response:", response);
-	return answer(response);
-}
-
 export async function act(document, question, action, observation) {
 	const sep = action.indexOf(":");
 	const fnName = action.substring(0, sep);
@@ -88,7 +81,6 @@ export async function act(document, question, action, observation) {
 		.substring(sep + 1)
 		.trim()
 		.split(" ");
-	console.log({ fnName, fnArgs });
 
 	if (fnName === "lookup") {
 		return await lookup(document, question, observation);
@@ -101,13 +93,6 @@ export async function act(document, question, action, observation) {
 	}
 	console.log("Not recognized action:", { action, name: fnName, args: fnArgs });
 	return await act(document, question, `lookup: ${question}`, observation);
-}
-
-export function finalPrompt(inquiry, observation) {
-	return `${inquiry}
-Observation: ${observation}
-Thought: Now I have the answer.
-Answer:`;
 }
 
 export function parse(text) {
@@ -125,7 +110,6 @@ export function parse(text) {
 				const value = substr.split("\n").shift();
 				str = str.slice(0, pos);
 				const key = marker.toLowerCase();
-				console.log(key);
 				parts[key] = value;
 			}
 		}
@@ -171,17 +155,6 @@ export async function reason(document, history, inquiry) {
 		observation,
 	);
 	return { thought, action, observation, answer: result, source, reference };
-}
-
-const HISTORY_MSG =
-	"Before formulating a thought, consider the following conversation history.";
-
-export function context(history) {
-	if (history.length > 0) {
-		const recents = history.slice(-3 * 2); // only last 3 Q&A
-		return `${HISTORY_MSG}\n\n${recents.join("\n")}`;
-	}
-	return "";
 }
 
 export async function encode(sentence) {

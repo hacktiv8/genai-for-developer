@@ -6,7 +6,6 @@ import {
 	answer,
 	encode,
 	generate,
-	finalPrompt,
 	context,
 	parse,
 	search,
@@ -72,17 +71,6 @@ test.skip("answer() function returns '?' if 'Answer:' is not found", async funct
 	expect(result).toBe("?");
 });
 
-test("finalPrompt() function return observation, thought and answer", function () {
-	const prompt = finalPrompt(
-		"Question: How the weather in Jakarta?",
-		"It's sunny in Jakarta.",
-	);
-	expect(prompt).toBe(`Question: How the weather in Jakarta?
-Observation: It's sunny in Jakarta.
-Thought: Now I have the answer.
-Answer:`);
-});
-
 test.todo(
 	"Function act() return null when there is no action",
 	async function () {
@@ -110,31 +98,6 @@ test.skip("Function act() return action when there is action is 'weather'", asyn
 });
 
 test.todo("reason() function return conclusion");
-
-test("context function always return maximum 3 conversation history", function () {
-	const history = [
-		"Question: How are you?",
-		"Answer: I'm fine.",
-		"Question: What are you doing?",
-		"Answer: I'm working.",
-		"Question: What is your name?",
-		"Answer: My name is LLM.",
-		"Question: How old are you?",
-		"Answer: I'm 12 year old.",
-	];
-	const result = context(history);
-	expect(result).toBe(
-		`Before formulating a thought, consider the following conversation history.\n\nQuestion: What are you doing?\nAnswer: I'm working.\nQuestion: What is your name?\nAnswer: My name is LLM.\nQuestion: How old are you?\nAnswer: I'm 12 year old.`,
-	);
-});
-
-test("context function always return any number of conversation history if less than 3 conversation.", function () {
-	const history = ["Question: How are you?", "Answer: I'm fine."];
-	const result = context(history);
-	expect(result).toBe(
-		`Before formulating a thought, consider the following conversation history.\n\nQuestion: How are you?\nAnswer: I'm fine.`,
-	);
-});
 
 test("Parse function", function () {
 	const parts = parse(`Question: What is the weather in Jakarta?
