@@ -4,10 +4,12 @@
 
 This is a material for GenAI for Developer Course. This course is designed to help developers to learn about AI and how to build AI applications. This course is designed for developers who have no experience in AI.
 
-## LangChain Document Loaders
+## LangChain Document Embeddings
 
 ```bash
-$ npm install pdf-parse
+$ ollama pull all-minilm:l6-v2
+$ ollama serve
+$ node langchain-embeddings.js
 ```
 
 ## Example prompt
