@@ -4,6 +4,7 @@ import { ChatOllama } from "@langchain/community/chat_models/ollama";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { AgentExecutor, createReactAgent } from "langchain/agents";
 import { ConsoleCallbackHandler } from "@langchain/core/tracers/console";
+import { WikipediaQueryRun } from "@langchain/community/tools/wikipedia_query_run";
 
 const model = new ChatOllama({
   model: "mistral-openorca",
@@ -48,7 +49,12 @@ const timeTool = new DynamicTool({
   func: async () => new Date().toLocaleTimeString(),
 });
 
-const tools = [timeTool];
+const wikiTool = new WikipediaQueryRun({
+  topkResults: 3,
+  maxContextLength: 4000,
+});
+
+const tools = [timeTool, wikiTool];
 
 // prompt |> model |> parse
 const agent = await createReactAgent({
@@ -63,8 +69,8 @@ const agentExecutor = new AgentExecutor({
 
 const response = await agentExecutor.invoke(
   {
-    input: "What is the time right now?",
+    input: "Who won the 2024 NBA Finals?",
   },
-  // { callbacks: [new ConsoleCallbackHandler()] },
+  { callbacks: [new ConsoleCallbackHandler()] },
 );
 console.log(response);
