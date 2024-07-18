@@ -1,0 +1,4 @@
+FROM ./csmodel.q8_0.gguf
+PARAMETER temperature 0
+PARAMETER stop <|im_start|>
+PARAMETER stop <|im_end|>
