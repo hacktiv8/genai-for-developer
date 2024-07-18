@@ -18,6 +18,8 @@
       # create an environment with nodejs_18
       packages = with pkgs; [
         nodejs_22
+        python3
+        pipx
       ];
 
       shellHook = ''
