@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { ChatOllama } from "@langchain/community/chat_models/ollama";
-import { StringOutputParser } from "@langchain/core/output_parsers";
+import { StructuredOutputParser } from "@langchain/core/output_parsers";
 
 const api = new Hono();
 const model = new ChatOllama({
@@ -19,7 +19,11 @@ const prompt = ChatPromptTemplate.fromMessages([
   ],
 ]);
 
-const outputParser = new StringOutputParser();
+const outputParser = StructuredOutputParser.fromNamesAndDescriptions({
+  name: "The name of the recipe",
+  ingredients: "The ingredients required for the recipe",
+  instructions: "The instructions to prepare the recipe",
+});
 
 // prompt |> model |> parse |> invoke
 const chains = prompt.pipe(model).pipe(outputParser);
