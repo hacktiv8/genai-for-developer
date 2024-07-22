@@ -1,4 +1,4 @@
 import { serve } from "@hono/node-server";
-import app from "./app.js";
+import api from "./api.js";
 
-serve({ fetch: app.fetch, port: 3000 });
+serve({ fetch: api.fetch, port: 3000 });
