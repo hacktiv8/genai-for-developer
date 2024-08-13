@@ -8,8 +8,8 @@ Use Thought to describe your thoughts about the question you have been asked.
 Observation will be the result of running those actions.
 
 If you can not answer the question from your memory, use Action to run one of these actions available to you:
-- lookup: terms
-- exchange: from to
+- If the question is about currency, use exchange: from to
+- Otherwise, use lookup: terms
 
 Here are some sample sessions.
 
@@ -35,7 +35,7 @@ Let's go!`;
 
 export async function answer(text) {
 	const MARKER = "Answer:";
-	const pos = text.lastIndexOf(MARKER);
+	const pos = text.indexOf(MARKER);
 	if (pos < 0) return "?";
 	const answer = text.substr(pos + MARKER.length).trim();
 	return answer;
